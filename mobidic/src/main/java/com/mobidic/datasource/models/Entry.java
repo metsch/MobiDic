@@ -27,8 +27,8 @@ import lombok.ToString;
 
 @ToString
 @Entity
-@Table(name = "clients")
-public class Client implements Serializable {
+@Table(name = "entries")
+public class Entry implements Serializable {
 
     @Getter
     @Setter
@@ -39,30 +39,20 @@ public class Client implements Serializable {
     @Getter
     @Setter
     @Column
-    private String firstname;
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date timestamp;
 
     @Getter
     @Setter
     @Column
-    private String lastname;
-
-    @Getter
-    @Setter
-    @Column
-    private Date date_of_birth;
-
-    @Getter
-    @Column
-    @Setter
-    @Type(type = "org.hibernate.type.NumericBooleanType")
-    private Boolean is_female;
+    private String text;
 
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name="institution_id")
-    @JsonBackReference(value="institutions_clients")
-    private Institution institution;
+    @JoinColumn(name="supervisor_id")
+    @JsonBackReference(value="supervisors_entries")
+    private Supervisor supervisor;
 
     @Getter
     @Setter
@@ -76,18 +66,15 @@ public class Client implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updated_at;
 
-    protected Client() {
+    protected Entry() {
     }
 
-    public Client(String firstname,String lastname,Date date_of_birth,Boolean is_female) {
-        this.firstname=firstname;
-        this.lastname=lastname;
-        this.date_of_birth=date_of_birth;
-        this.is_female=is_female;
+    public Entry(String text) {
+        this.text=text;
     }
 
     // Extra getter to display the institution_id in the json response
-    public Long getInstitution_id(){
-        return this.institution.getId();
+    public Long getSupervisor_id(){
+        return this.supervisor.getId();
     }
 }

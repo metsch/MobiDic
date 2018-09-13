@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -39,9 +41,17 @@ public class Institution implements Serializable {
     private String name;
 
     // mappedBy the name of the parent field --> in class Client: private Institution institution
+    @Getter
+    @Setter
     @OneToMany(mappedBy = "institution", orphanRemoval = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference(value = "institutions_clients")
-    private List<Client> clients;
+    private Set<Client> clients;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "institution", orphanRemoval = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference(value = "institution_supervisors")
+    private Set<Supervisor> supervisors;
 
     protected Institution() {
     }
