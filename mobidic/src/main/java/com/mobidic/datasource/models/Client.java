@@ -3,21 +3,26 @@ package com.mobidic.datasource.models;
 import java.io.Serializable;
 import java.security.Timestamp;
 import java.sql.Date;
+import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.Type;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 import lombok.Getter;
@@ -63,6 +68,12 @@ public class Client implements Serializable {
     @JoinColumn(name="institution_id")
     @JsonBackReference(value="institutions_clients")
     private Institution institution;
+
+    @Getter
+    @Setter
+    @OneToMany(mappedBy = "client", orphanRemoval = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference(value = "client_client_entries")
+    private Set<Client_entry> client_entries;
 
     @Getter
     @Setter
