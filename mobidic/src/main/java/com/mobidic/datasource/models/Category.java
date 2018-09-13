@@ -32,8 +32,8 @@ import lombok.ToString;
 
 @ToString
 @Entity
-@Table(name = "entries")
-public class Entry implements Serializable {
+@Table(name = "categories")
+public class Category implements Serializable {
 
     @Getter
     @Setter
@@ -44,20 +44,12 @@ public class Entry implements Serializable {
     @Getter
     @Setter
     @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date timestamp;
-
+    private String name;
+    
     @Getter
     @Setter
     @Column
-    private String text;
-
-    @Getter
-    @Setter
-    @ManyToOne
-    @JoinColumn(name="supervisor_id")
-    @JsonBackReference(value="supervisors_entries")
-    private Supervisor supervisor;
+    private String flag;
 
     @Getter
     @Setter
@@ -73,26 +65,15 @@ public class Entry implements Serializable {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "entry", orphanRemoval = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference(value = "entry_client_entries")
-    private Set<Client_entry> client_entries;
-
-    @Getter
-    @Setter
-    @OneToMany(mappedBy = "entry", orphanRemoval = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference(value = "entries_entry_categories")
+    @OneToMany(mappedBy = "category", orphanRemoval = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference(value = "categories_entry_categories")
     private Set<Entry_category> entry_categories;
-    
 
-    protected Entry() {
+    protected Category() {
     }
 
-    public Entry(String text) {
-        this.text=text;
-    }
-
-    // Extra getter to display the institution_id in the json response
-    public Long getSupervisor_id(){
-        return this.supervisor.getId();
+    public Category(String name,String flag) {
+        this.flag=name;
+        this.flag=flag;
     }
 }
