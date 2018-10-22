@@ -1,4 +1,5 @@
 package com.mobidic.datasource.controllers;
+
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
@@ -25,7 +26,6 @@ public class ClientController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Client> getClient(@PathVariable("id") Long id) {
         Client client = clientRepository.findById(id).get();
-        logger.info(client.toString());
-        return new ResponseEntity<Client>(client,HttpStatus.OK);
+        return new ResponseEntity<Client>(client, HttpStatus.OK);
     }
 }

@@ -29,7 +29,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @ToString
 @Entity
 @Table(name = "supervisors")
@@ -59,8 +58,8 @@ public class Supervisor implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name="institution_id")
-    @JsonBackReference(value="institutions_supervisors")
+    @JoinColumn(name = "institution_id")
+    @JsonManagedReference(value = "institution_supervisors")
     private Institution institution;
 
     @Getter
@@ -77,21 +76,21 @@ public class Supervisor implements Serializable {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "supervisor", orphanRemoval = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "supervisor", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference(value = "supervisors_entries")
     private Set<Entry> entries;
 
     protected Supervisor() {
     }
 
-    public Supervisor(String firstname,String lastname,String password_digest) {
-        this.firstname=firstname;
-        this.lastname=lastname;
-        this.password_digest=password_digest;
+    public Supervisor(String firstname, String lastname, String password_digest) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password_digest = password_digest;
     }
 
     // Extra getter to display the institution_id in the json response
-    public Long getInstitution_id(){
+    public Long getInstitution_id() {
         return this.institution.getId();
     }
 }

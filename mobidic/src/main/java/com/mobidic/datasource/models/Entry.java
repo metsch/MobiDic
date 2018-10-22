@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -28,7 +30,6 @@ import javax.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 
 @ToString
 @Entity
@@ -55,8 +56,8 @@ public class Entry implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name="supervisor_id")
-    @JsonBackReference(value="supervisors_entries")
+    @JoinColumn(name = "supervisor_id")
+    @JsonBackReference(value = "supervisors_entries")
     private Supervisor supervisor;
 
     @Getter
@@ -71,28 +72,30 @@ public class Entry implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private java.util.Date updated_at;
 
+    // https://www.baeldung.com/hibernate-many-to-many
     @Getter
     @Setter
-    @OneToMany(mappedBy = "entry", orphanRemoval = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference(value = "entry_client_entries")
-    private Set<Client_entry> client_entries;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "clients_entries", joinColumns = { @JoinColumn(name = "entry_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "client_id") })
+    private Set<Client> clients;
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "entry", orphanRemoval = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference(value = "entries_entry_categories")
-    private Set<Entry_category> entry_categories;
-    
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "categories_entries", joinColumns = { @JoinColumn(name = "entry_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "category_id") })
+    private Set<Client> categories;
 
     protected Entry() {
     }
 
     public Entry(String text) {
-        this.text=text;
+        this.text = text;
     }
 
     // Extra getter to display the institution_id in the json response
-    public Long getSupervisor_id(){
+    public Long getSupervisor_id() {
         return this.supervisor.getId();
     }
 }

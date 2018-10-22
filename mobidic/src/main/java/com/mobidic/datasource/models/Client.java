@@ -2,7 +2,7 @@ package com.mobidic.datasource.models;
 
 import java.io.Serializable;
 import java.security.Timestamp;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -28,7 +29,6 @@ import javax.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 
 @ToString
 @Entity
@@ -65,21 +65,20 @@ public class Client implements Serializable {
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name="institution_id")
-    @JsonBackReference(value="institutions_clients")
+    @JoinColumn(name = "institution_id")
+    @JsonManagedReference(value = "institution_clients")
     private Institution institution;
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "client", orphanRemoval = true,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference(value = "client_client_entries")
-    private Set<Client_entry> client_entries;
+    @ManyToMany(mappedBy = "clients")
+    private Set<Entry> entries;
 
     @Getter
     @Setter
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date created_at;
+    private Date created_at = new Date();
 
     @Getter
     @Setter
@@ -90,15 +89,20 @@ public class Client implements Serializable {
     protected Client() {
     }
 
-    public Client(String firstname,String lastname,Date date_of_birth,Boolean is_female) {
-        this.firstname=firstname;
-        this.lastname=lastname;
-        this.date_of_birth=date_of_birth;
-        this.is_female=is_female;
+    public Client(String firstname, String lastname, Date date_of_birth, Boolean is_female, Institution institution) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.date_of_birth = date_of_birth;
+        this.is_female = is_female;
+        this.institution = institution;
     }
 
     // Extra getter to display the institution_id in the json response
-    public Long getInstitution_id(){
+    public Long getInstitution_id() {
         return this.institution.getId();
+    }
+
+    public void setInstituion_id(Long id) {
+        institution.setId(id);
     }
 }
