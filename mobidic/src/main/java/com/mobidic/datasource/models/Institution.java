@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -48,13 +49,13 @@ public class Institution implements Serializable {
     @Getter
     @Setter
     @OneToMany(mappedBy = "institution", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonBackReference(value = "institution_clients")
+    @JsonManagedReference(value = "institution_clients")
     private Set<Client> clients;
 
     @Getter
     @Setter
     @OneToMany(mappedBy = "institution", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonBackReference(value = "institution_supervisors")
+    @JsonManagedReference(value = "institution_supervisors")
     private Set<Supervisor> supervisors;
 
     @Getter

@@ -44,12 +44,6 @@ public class Entry implements Serializable {
     @Getter
     @Setter
     @Column
-    @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date timestamp;
-
-    @Getter
-    @Setter
-    @Column
     private String text;
 
     @Getter

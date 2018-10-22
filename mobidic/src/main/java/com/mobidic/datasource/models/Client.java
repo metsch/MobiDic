@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.TemporalType;
@@ -64,7 +65,7 @@ public class Client implements Serializable {
     @Setter
     @ManyToOne
     @JoinColumn(name = "institution_id")
-    @JsonManagedReference(value = "institution_clients")
+    @JsonBackReference(value = "institution_clients")
     private Institution institution;
 
     @Getter
@@ -95,14 +96,5 @@ public class Client implements Serializable {
         this.date_of_birth = date_of_birth;
         this.is_female = is_female;
         this.institution = institution;
-    }
-
-    // Extra getter to display the institution_id in the json response
-    public Long getInstitution_id() {
-        return this.institution.getId();
-    }
-
-    public void setInstituion_id(Long id) {
-        institution.setId(id);
     }
 }
