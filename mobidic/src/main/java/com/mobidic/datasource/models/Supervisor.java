@@ -1,8 +1,7 @@
 package com.mobidic.datasource.models;
 
 import java.io.Serializable;
-import java.security.Timestamp;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -16,11 +15,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -65,14 +65,16 @@ public class Supervisor implements Serializable {
     @Getter
     @Setter
     @Column
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date created_at;
+    private Date created_at;
 
     @Getter
     @Setter
     @Column
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date updated_at;
+    private Date updated_at;
 
     @Getter
     @Setter

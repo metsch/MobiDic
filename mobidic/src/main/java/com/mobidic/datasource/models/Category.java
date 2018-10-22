@@ -1,35 +1,21 @@
 package com.mobidic.datasource.models;
 
 import java.io.Serializable;
-import java.security.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 import lombok.Getter;
