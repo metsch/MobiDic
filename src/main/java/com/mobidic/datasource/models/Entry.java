@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.TemporalType;
 
@@ -50,7 +51,7 @@ public class Entry implements Serializable {
     @Setter
     @ManyToOne
     @JoinColumn(name = "supervisor_id")
-    @JsonBackReference(value = "supervisors_entries")
+    @JsonBackReference(value = "supervisor_entries")
     private Supervisor supervisor;
 
     @Getter

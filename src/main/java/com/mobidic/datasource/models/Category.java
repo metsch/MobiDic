@@ -43,7 +43,6 @@ public class Category implements Serializable {
     @Column
     private String flag;
 
-    // TODO: Creation Timestamp gets currently deleted when the field is updated
     @Getter
     @Setter
     @Column

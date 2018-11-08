@@ -2,6 +2,7 @@ package com.mobidic.datasource.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -59,7 +60,7 @@ public class Supervisor implements Serializable {
     @Setter
     @ManyToOne
     @JoinColumn(name = "institution_id")
-    @JsonManagedReference(value = "institution_supervisors")
+    @JsonBackReference(value = "institution_supervisors")
     private Institution institution;
 
     @Getter
@@ -79,7 +80,6 @@ public class Supervisor implements Serializable {
     @Getter
     @Setter
     @OneToMany(mappedBy = "supervisor", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference(value = "supervisors_entries")
     private Set<Entry> entries;
 
     protected Supervisor() {
@@ -89,6 +89,7 @@ public class Supervisor implements Serializable {
         this.firstname = firstname;
         this.lastname = lastname;
         this.password_digest = password_digest;
+        entries = new HashSet<Entry>();
     }
 
     // Extra getter to display the institution_id in the json response
