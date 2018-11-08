@@ -30,55 +30,41 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+@Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "supervisors")
 public class Supervisor implements Serializable {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
     @Column
     private String firstname;
 
-    @Getter
-    @Setter
     @Column
     private String lastname;
 
-    @Getter
-    @Setter
     @Column
     private String password_digest;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "institution_id")
     @JsonBackReference(value = "institution_supervisors")
     private Institution institution;
 
-    @Getter
-    @Setter
     @Column
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at;
 
-    @Getter
-    @Setter
     @Column
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated_at;
 
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "supervisor", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Entry> entries;
 
@@ -89,11 +75,10 @@ public class Supervisor implements Serializable {
         this.firstname = firstname;
         this.lastname = lastname;
         this.password_digest = password_digest;
-        entries = new HashSet<Entry>();
     }
 
-    // Extra getter to display the institution_id in the json response
-    public Long getInstitution_id() {
-        return this.institution.getId();
-    }
+    // Extra getter to display the institution_id in the json response if required
+    // public Long getInstitution_id() {
+    // return this.institution.getId();
+    // }
 }

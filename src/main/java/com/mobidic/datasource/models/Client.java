@@ -29,59 +29,43 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+@Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "clients")
 public class Client implements Serializable {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
     @Column
     private String firstname;
 
-    @Getter
-    @Setter
     @Column
     private String lastname;
 
-    @Getter
-    @Setter
     @Column
     private Date date_of_birth;
 
-    @Getter
     @Column
-    @Setter
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private Boolean is_female;
 
-    @Getter
-    @Setter
     @ManyToOne
     @JoinColumn(name = "institution_id")
     @JsonBackReference(value = "institution_clients")
     private Institution institution;
 
-    @Getter
-    @Setter
     @ManyToMany(mappedBy = "clients")
     private Set<Entry> entries;
 
-    @Getter
-    @Setter
     @Column
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at;
 
-    @Getter
-    @Setter
     @Column
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)

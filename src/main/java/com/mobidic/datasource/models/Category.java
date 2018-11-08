@@ -22,43 +22,33 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+@Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "categories")
 public class Category implements Serializable {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
     @Column
     private String name;
 
-    @Getter
-    @Setter
     @Column
     private String flag;
 
-    @Getter
-    @Setter
     @Column
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at;
 
-    @Getter
-    @Setter
     @Column
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date updated_at;
 
-    @Getter
-    @Setter
     @ManyToMany(mappedBy = "categories")
     private Set<Entry> entries;
 
@@ -68,6 +58,5 @@ public class Category implements Serializable {
     public Category(String name, String flag) {
         this.flag = name;
         this.flag = flag;
-        // created_at = new Date();
     }
 }

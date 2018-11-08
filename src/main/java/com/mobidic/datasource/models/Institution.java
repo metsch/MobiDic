@@ -25,41 +25,31 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+@Getter
+@Setter
 @ToString
 @Entity
 @Table(name = "institutions")
 public class Institution implements Serializable {
 
-    @Getter
-    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter
-    @Setter
     @Column
     private String name;
 
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "institution", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Client> clients;
 
-    @Getter
-    @Setter
     @OneToMany(mappedBy = "institution", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Supervisor> supervisors;
 
-    @Getter
-    @Setter
     @Column
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date created_at;
 
-    @Getter
-    @Setter
     @Column
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -70,7 +60,5 @@ public class Institution implements Serializable {
 
     public Institution(String name) {
         this.name = name;
-        clients = new HashSet<Client>();
-        supervisors = new HashSet<Supervisor>();
     }
 }
