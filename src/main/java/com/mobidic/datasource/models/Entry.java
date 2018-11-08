@@ -80,7 +80,7 @@ public class Entry implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "categories_entries", joinColumns = { @JoinColumn(name = "entry_id") }, inverseJoinColumns = {
             @JoinColumn(name = "category_id") })
-    private Set<Client> categories;
+    private Set<Category> categories;
 
     protected Entry() {
     }

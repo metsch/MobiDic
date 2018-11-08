@@ -69,6 +69,6 @@ public class Category implements Serializable {
     public Category(String name, String flag) {
         this.flag = name;
         this.flag = flag;
-        created_at = new Date();
+        // created_at = new Date();
     }
 }
